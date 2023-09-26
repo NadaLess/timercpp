@@ -2,11 +2,14 @@
 #define TIMER_H
 
 #include <mutex>
+#include <condition_variable>
+#include <atomic>
 #include <thread>
+#include <functional>
 
 class Timer
 {
-    public:
+public:
     Timer(std::function<void()> f, bool triggerOnce = false);
     ~Timer();
 
@@ -15,7 +18,7 @@ class Timer
 
     void triggerOnce();
 
-    private:
+private:
     std::condition_variable m_cv;
     std::atomic_bool m_loop;
     std::atomic_bool m_exit;
